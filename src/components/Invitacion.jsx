@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
-import dressCodeIcon from '../assets/dressCodeIcon.svg'
+import dressCodeIcon from "../assets/dressCodeIcon.svg";
 import decoracionNombre from "../assets/aurora/decoracionNombre.svg";
 import InstagramWall from "./InstagramWall";
 import GoogleCalendarButton from "./GoogleCalendarButton";
@@ -12,7 +12,7 @@ import Footer from "./Footer";
 import TextoFinal from "./TextoFinal";
 import LugaresXV from "./LugaresXV";
 import { FocusCardsDemo } from "./FocusCardsDemo";
-import song from '../assets/song.mp3'
+import song from "../assets/song.mp3";
 
 import DressCodeEsmeralda from "./DressCodeEsmeralda";
 import PastelCountdown from "./PastelCountdown";
@@ -20,7 +20,6 @@ import MusicScreen from "./MusicScreen";
 import Tarjeta from "./Tarjeta";
 
 const Invitacion = () => {
-
   const targetDate = new Date("2026-08-15T21:30:00-03:00");
 
   useEffect(() => {
@@ -29,24 +28,21 @@ const Invitacion = () => {
       easing: "ease-in-out",
       once: true,
     });
-  },[])
-
-
+  }, []);
 
   return (
     <div className="w-full font-eleganteText relative overflow-hidden bg-[#f8f5f0]">
-
-        <div className="absolute z-40">
-          <MusicScreen cancion={song} />
-        </div>
+      <div className="absolute z-40">
+        <MusicScreen cancion={song} />
+      </div>
 
       <div className="relative flex flex-col justify-center items-center min-h-screen w-full text-center bg-black bg-center bg-cover font-eleganteText space-y-5 overflow-hidden">
         <div data-aos="fade-in">
-
           <div
             className="relative z-10 flex flex-col items-center justify-center text-center text-white min-h-screen bg-center bg-cover"
             style={{
-              backgroundImage: "url('https://res.cloudinary.com/dfschbyq2/image/upload/v1757369242/542e2c47-a250-4f2f-820e-2cab2758576d_gbxkmx.jpg')",
+              backgroundImage:
+                "url('https://res.cloudinary.com/dfschbyq2/image/upload/v1757369242/542e2c47-a250-4f2f-820e-2cab2758576d_gbxkmx.jpg')",
             }}
           >
             <div className="flex items-center justify-center mb-2 mt-80">
@@ -78,12 +74,43 @@ const Invitacion = () => {
           id="contador"
           className="bg-darkgray py-10 border-y-2 border-lightgold text-center"
         >
-          <p className="text-xl tracking-wider font-libertinus font-light py-5 text-lightgold" data-aos="fade-in">Sábado 15 de Agosto de 2026</p>
-          <PastelCountdown targetDate={targetDate} bgColor="bg-gold"/>
+          <p
+            className="text-xl tracking-wider font-libertinus font-light py-5 text-lightgold"
+            data-aos="fade-in"
+          >
+            Sábado 15 de Agosto de 2026
+          </p>
+          <PastelCountdown targetDate={targetDate} bgColor="bg-gold" />
         </section>
-        <div className="font-libertinus text-2xl italic bg-white border-y border-gold">
-          <TextoFinal textoFinal="Hay momentos en la vida que representan un antes y un después" />
-        </div>
+        <section id="frases" className="bg-white py-12">
+          <div className="mx-auto max-w-prose px-6 text-center">
+
+            <ul className="space-y-8 md:space-y-10">
+              {[
+                "Hay momentos en la vida que representan un antes y un después",
+                "Comienza otra etapa, otros caminos, otros sueños…",
+                "Quedan atrás imborrables recuerdos y en adelante se forjarán otros nuevos.",
+                "Este día tan ansiado llegó y quiero que seas de las personas que van a hacerlo parte…",
+                "¡Por eso te invito a MIS XV!",
+              ].map((t, i, arr) => (
+                <li
+                  key={i}
+                  data-aos="fade-up"
+                  data-aos-delay={i * 80}
+                  className="text-[17px] md:text-lg leading-relaxed text-neutral-700 font-libertinus"
+                >
+                  {i === 0 && (
+                    <div className="mx-auto mb-6 h-px w-16 md:w-24 bg-gradient-to-r from-transparent via-gold/50 to-transparent" />
+                  )}
+                  <span className={i < 2 ? "italic" : ""}>{t}</span>
+                  {(i < arr.length - 1 || i === arr.length - 1) && (
+                    <div className="mx-auto mt-6 h-px w-16 md:w-24 bg-gradient-to-r from-transparent via-gold/50 to-transparent" />
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
 
         <section id="lugares" className="relative text-center bg-white py-10">
           <LugaresXV
@@ -92,56 +119,54 @@ const Invitacion = () => {
             hora_inicio="21:30hs"
             hora_fin="05:00hs"
           />
-          <a href="https://maps.app.goo.gl/CvQ45REQTwdhCMTv7" target="_blank" rel="noopener noreferrer">
+          <a
+            href="https://maps.app.goo.gl/CvQ45REQTwdhCMTv7"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <button className="border-2 border-gold my-2 py-3 px-8 rounded-full text-gray-800 font-libertinus  hover:text-gray-600 transition cursor-pointer">
               CÓMO LLEGAR
             </button>
           </a>
         </section>
-        <div className="font-libertinus text-2xl italic bg-white border-y-2 border-gold">
-          <TextoFinal textoFinal="Comienza otra etapa, otros caminos, otros sueños…" />
-        </div>
         <div className="relative bg-white">
           <section className="py-16 ">
-              <FocusCardsDemo
-                texto=""
-                images={[
-                  {
-                    index: 1,
-                    img: "https://res.cloudinary.com/dfschbyq2/image/upload/v1757369242/fe548e33-d39f-4f24-8cc8-47be5654d9fd_ntww9q.jpg",
-                  },
-                  {
-                    index: 2,
-                    img: "https://res.cloudinary.com/dfschbyq2/image/upload/v1757369242/b37b797b-b427-4155-97b0-639108ecc231_inyswc.jpg",
-                  },
-                  {
-                    index: 3,
-                    img: "https://res.cloudinary.com/dfschbyq2/image/upload/v1757369242/80959087-833b-4c21-80d4-93dd9155d66d_gpcxdz.jpg",
-                  },
-                  {
-                    index: 4,
-                    img: "https://res.cloudinary.com/dfschbyq2/image/upload/v1757369242/997cb10b-9548-4f2f-81a2-be0eca0600ca_snja9h.jpg",
-                  },
-                  {
-                    index: 5,
-                    img: "https://res.cloudinary.com/dfschbyq2/image/upload/v1757369242/765c691f-f781-4aa7-97c8-7a522373eeb0_ra7wba.jpg",
-                  },
-                  {
-                    index: 6,
-                    img: "https://res.cloudinary.com/dfschbyq2/image/upload/v1757369242/c698a05d-793a-4d95-98ed-e7d0f9ab42eb_ihwol5.jpg",
-                  },
-                ]}
-              />
+            <FocusCardsDemo
+              texto=""
+              images={[
+                {
+                  index: 1,
+                  img: "https://res.cloudinary.com/dfschbyq2/image/upload/v1757369242/fe548e33-d39f-4f24-8cc8-47be5654d9fd_ntww9q.jpg",
+                },
+                {
+                  index: 2,
+                  img: "https://res.cloudinary.com/dfschbyq2/image/upload/v1757369242/b37b797b-b427-4155-97b0-639108ecc231_inyswc.jpg",
+                },
+                {
+                  index: 3,
+                  img: "https://res.cloudinary.com/dfschbyq2/image/upload/v1757369242/80959087-833b-4c21-80d4-93dd9155d66d_gpcxdz.jpg",
+                },
+                {
+                  index: 4,
+                  img: "https://res.cloudinary.com/dfschbyq2/image/upload/v1757369242/997cb10b-9548-4f2f-81a2-be0eca0600ca_snja9h.jpg",
+                },
+                {
+                  index: 5,
+                  img: "https://res.cloudinary.com/dfschbyq2/image/upload/v1757369242/765c691f-f781-4aa7-97c8-7a522373eeb0_ra7wba.jpg",
+                },
+                {
+                  index: 6,
+                  img: "https://res.cloudinary.com/dfschbyq2/image/upload/v1757369242/c698a05d-793a-4d95-98ed-e7d0f9ab42eb_ihwol5.jpg",
+                },
+              ]}
+            />
           </section>
-        </div>
-        <div className="font-libertinus text-2xl italic bg-white border-y-2 border-gold">
-          <TextoFinal textoFinal="Quedan atrás imborrables recuerdos y en adelante se forjarán otros nuevos." />
         </div>
         <div className="bg-white border-b border-pink-100">
           <InstagramWall
             userClass="text-gray-600"
             logoClass="text-pink-300"
-            user="@mia"
+            user="@miaxv2026"
           />
         </div>
 
@@ -155,11 +180,8 @@ const Invitacion = () => {
             fechaFin="20260816T050000"
           />
         </div>
-        <div className="font-libertinus text-2xl italic bg-white border-y-2 border-gold">
-          <TextoFinal textoFinal="Este día tan ansiado llegó y quiero que seas de las personas que van a hacerlo parte…" />
-        </div>
         <div className="relative bg-darkgray py-10">
-          <DressCodeEsmeralda dressCode="Elegante Sport" icon={dressCodeIcon}/>
+          <DressCodeEsmeralda dressCode="Elegante Sport" icon={dressCodeIcon} />
         </div>
         <DatosBancarios
           texto="Valor de la tarjeta por persona"
@@ -182,9 +204,6 @@ const Invitacion = () => {
           claseModal="bg-black/80"
           borderModal="border-gold"
         />
-        <div className="font-libertinus text-2xl italic bg-white border-y-2 border-gold">
-          <TextoFinal textoFinal="¡Por eso te invito a MIS XV!" />
-        </div>
         <Asistencia
           clase="py-10 bg-white bg-fixed border-b-2 border-gold font-libertinus"
           claseTitle="text-gray-700"
@@ -192,7 +211,7 @@ const Invitacion = () => {
           linkAsistencia="https://docs.google.com/forms/d/e/1FAIpQLSes3F8QQmb8OntNQxGbRg3nQVM0ZOp-bNjcZAbOZIUaJ5uRgQ/viewform?usp=header"
         />
 
-        <div className="font-libertinus text-2xl italic bg-white">
+        <div className="font-libertinus text-2xl italic bg-white py-10">
           <TextoFinal textoFinal="¡Gracias por venir!" />
         </div>
 
