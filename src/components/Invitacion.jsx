@@ -189,7 +189,7 @@ const Invitacion = () => {
           clase="py-10 bg-white bg-fixed border-b-2 border-gold font-libertinus"
           claseTitle="text-gray-700"
           claseButton="border-2 border-gold cursor-pointer font-semibold text-gray-700 rounded-full"
-          linkAsistencia="https://docs.google.com/forms/d/e/1FAIpQLSeK0vUpx6zegOhIcQr2rRVADqcpoDD4cDYyRSEOkyALbf-Spg/viewform?usp=dialog"
+          linkAsistencia="https://docs.google.com/forms/d/e/1FAIpQLSes3F8QQmb8OntNQxGbRg3nQVM0ZOp-bNjcZAbOZIUaJ5uRgQ/viewform?usp=header"
         />
 
         <div className="font-libertinus text-2xl italic bg-white">
