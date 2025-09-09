@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+
+@theme {
+    --font-libertinus: "Libertinus Serif", serif;
+    --color-gold: #a5855f; 
+    --color-lightgold: #ba9972;
+    --color-darkgray: #282828;
+    --color-lightgray: #2f2f2f;
+}
+
