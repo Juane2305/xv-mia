@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
@@ -19,8 +19,27 @@ import PastelCountdown from "./PastelCountdown";
 import MusicScreen from "./MusicScreen";
 import Tarjeta from "./Tarjeta";
 
+// --- Password Gate (simple, comparación directa con ENV) ---
+const EXPECTED_PASS = import.meta.env.VITE_INVITE_PASS; // ⚠️ visible en bundle
+const INVITE_KEY = "invite:xv-mia-2026"; // para sessionStorage
+
 const Invitacion = () => {
+  const [authenticated, setAuthenticated] = useState(false);
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [attempts, setAttempts] = useState(0);
+  const [lockedUntil, setLockedUntil] = useState(0);
+  const [entering, setEntering] = useState(false);
+
   const targetDate = new Date("2026-08-15T21:30:00-03:00");
+
+  useEffect(() => {
+    // restaurar sesión si ya se autenticó
+    if (sessionStorage.getItem(INVITE_KEY) === "ok") {
+      setAuthenticated(true);
+    }
+  }, []);
 
   useEffect(() => {
     AOS.init({
@@ -29,6 +48,82 @@ const Invitacion = () => {
       once: true,
     });
   }, []);
+
+  async function handleCheckPassword() {
+    try {
+      setError("");
+      const now = Date.now();
+      if (lockedUntil && now < lockedUntil) {
+        setError("Demasiados intentos. Esperá unos segundos y volvé a intentar.");
+        return;
+      }
+      setLoading(true);
+      const pass = password.trim();
+      if (EXPECTED_PASS && typeof EXPECTED_PASS === "string" && pass === EXPECTED_PASS) {
+        // mostrar loader de ingreso y autenticar con pequeño delay
+        sessionStorage.setItem(INVITE_KEY, "ok");
+        setPassword("");
+        setAttempts(0);
+        setLockedUntil(0);
+        setEntering(true);
+        setTimeout(() => {
+          setAuthenticated(true);
+          setEntering(false);
+        }, 700);
+      } else {
+        const next = attempts + 1;
+        setAttempts(next);
+        if (next >= 5) {
+          setLockedUntil(Date.now() + 30_000);
+          setAttempts(0);
+        }
+        setPassword(""); // limpiar input al error
+        setError("Contraseña incorrecta");
+      }
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  if (!authenticated) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-[#f8f5f0]">
+        <div className="bg-white p-8 rounded-2xl shadow-lg max-w-sm w-full text-center font-libertinus border border-gold/40">
+          <h2 className="text-2xl font-semibold mb-2 text-gray-800">Ingresá la contraseña</h2>
+          <p className="text-sm text-neutral-600 mb-6">Esta invitación está protegida.</p>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            onKeyDown={(e) => { if (e.key === "Enter") handleCheckPassword(); }}
+            className="w-full px-4 py-2 border border-gold/60 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold mb-3"
+            placeholder="Contraseña"
+            autoFocus
+            autoComplete="off"
+          />
+          <button
+            onClick={handleCheckPassword}
+            disabled={loading || !password}
+            className="w-full bg-gold text-white py-2 rounded-lg font-semibold hover:opacity-90 transition disabled:opacity-70"
+          >
+            {loading ? "Verificando…" : "Entrar"}
+          </button>
+          {entering && (
+            <div className="mt-3 flex justify-center">
+              <div
+                aria-label="cargando"
+                className="h-5 w-5 rounded-full border-2 border-gold border-t-transparent animate-spin"
+              />
+            </div>
+          )}
+          {error && <p className="mt-3 text-sm text-red-600">{error}</p>}
+          {lockedUntil > Date.now() ? (
+            <p className="mt-2 text-xs text-neutral-500">Bloqueo temporal por muchos intentos.</p>
+          ) : null}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full font-eleganteText relative overflow-hidden bg-[#f8f5f0]">
